@@ -1,0 +1,64 @@
+---
+title: "CFBMATH4773"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CFBMATH4773}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## The package
+
+The CFBMATH4773 package allows its user to quickly and efficiently access data of college football outcomes while also making it possible to predict hypothetical game outcomes using methods of multiple regression. Combining results data from sportsreference.com with rankings and evaluations from CBS sports and OddsShark this package provides lots of relevant information on any given FBS colleg football team.
+
+```{r setup}
+library(CFBMATH4773)
+```
+
+## Data
+
+  There are two data sources included in the package, the first `teamNames` is a reference list of all 130 fbs teams and the names by which they are called on the various different services that this package relies. This is mostly for internal use as the package often has to translate between sports reference names and their counterparts.
+
+  The other dataset is `CFB19wk13` which gives the season data as of week 13 in the 2019 season. Functions in this package can use this data to construct team objects. A function in this package allows you to scrape the web for more up to data data reported in the same format.
+  
+## Functions
+
+  `scrapeCurrentSeason()` is a function that scrapes the websites listed in the introduction for up to date information on results and rankings. This produces an output in the same format as the saved dataframe. Using either of these season dataframes one can make a `cfbTeam` object using the `team` function in this package. This type of object is stores all the relevant information of a team including the regressions used to make predictions. The first argument in the team function must be the team name given in the Sports Reference format. For a list of these team names one can use the `validTeamNames` function to see what Sports Reference calls all 130 CFB teams.
+  
+```
+CFB<-scrapeCurrentSeason()
+OSU<-team("Ohio State", CFB)
+```
+
+```{r include=FALSE}
+CFB<-CFB19wk13
+OSU<-team("Ohio State", CFB)
+```
+
+  Having created a team one can use the s3 method `summary.cfbTeam` to extract the easily readable information about the team such as its record and rank.
+  
+```{r}
+summary(OSU)
+```
+
+  This package can also be used to predict the outcome of games between opponents. using the `predictMatch` function any hypothetical game between teams can be predicted according to the regressions created and stored in the team object 
+  
+```{r}
+MICH<-team("Michigan", CFB)
+predictMatch(OSU, MICH)
+```
+
+
+
+
+
+  
+
+  

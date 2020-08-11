@@ -1,0 +1,6 @@
+pandoc: 2.7.2
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  CFBMATH4773: CFBMATH4773.html
+
